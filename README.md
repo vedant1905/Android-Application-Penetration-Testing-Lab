@@ -264,18 +264,5 @@ Professional penetration testing reports are included for each app:
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [OWASP Mobile Security Testing Guide](https://mas.owasp.org/)
-- [OWASP Mobile Top 10](https://owasp.org/www-project-mobile-top-10/)
-- [Android Security Documentation](https://developer.android.com/privacy-and-security)
-
----
 
 **Built for educational purposes as part of learning Android application security testing.**
