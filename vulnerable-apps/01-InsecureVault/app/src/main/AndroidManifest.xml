@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    AndroidManifest.xml for InsecureVault
+    OWASP M2: Insecure Data Storage
+
+    VULNERABILITIES PRESENT:
+    1. android:allowBackup="true" - Allows adb backup to extract app data
+    2. android:debuggable="true" - Allows debugger attachment in production
+    3. android:usesCleartextTraffic="true" - Allows HTTP (unencrypted) network traffic
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pentestlab.insecurevault">
+
+    <!-- VULNERABILITY: Overly broad permissions requested -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- Main login activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Notes activity - stores data insecurely -->
+        <activity
+            android:name=".NotesActivity"
+            android:exported="false" />
+    </application>
+</manifest>

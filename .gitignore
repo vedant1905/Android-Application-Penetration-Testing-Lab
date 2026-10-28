@@ -1,0 +1,46 @@
+# Android
+*.apk
+*.ap_
+*.dex
+*.class
+*.jar
+/build/
+*/build/
+*.iml
+.gradle/
+local.properties
+.idea/
+*.hprof
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+*.egg-info/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+*.sublime-*
+.project
+.classpath
+
+# Reports output
+reports/output/
+*.pdf
+
+# Test artifacts
+*.bak
+*.tmp

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    AndroidManifest.xml for ExposedApp
+    OWASP M1: Improper Platform Usage
+
+    VULNERABILITIES:
+    1. ProfileActivity exported without permissions — bypasses login
+    2. AdminActivity exported — full admin access without auth
+    3. UserContentProvider exported with no read/write permissions — SQL injection
+    4. DataBroadcastReceiver exported — leaks sensitive data
+    5. DeepLinkActivity handles unvalidated deep links
+    6. InternalWebViewActivity — JS interface RCE
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pentestlab.exposedapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- Login Activity (launcher) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- VULNERABILITY: Exported activity — can be launched directly, bypassing login -->
+        <!-- Exploit: adb shell am start -n com.pentestlab.exposedapp/.ProfileActivity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
+
+        <!-- VULNERABILITY: Exported admin panel — no auth required -->
+        <!-- Exploit: adb shell am start -n com.pentestlab.exposedapp/.AdminActivity -->
+        <activity
+            android:name=".AdminActivity"
+            android:exported="true" />
+
+        <!-- VULNERABILITY: WebView with JavaScript interface -->
+        <activity
+            android:name=".InternalWebViewActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- VULNERABILITY: Deep link handler with command injection -->
+        <activity
+            android:name=".DeepLinkActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="pentestlab" android:host="action" />
+            </intent-filter>
+        </activity>
+
+        <!-- VULNERABILITY: Content Provider exported with NO permissions -->
+        <!-- No readPermission or writePermission set -->
+        <provider
+            android:name=".UserContentProvider"
+            android:authorities="com.pentestlab.exposedapp.provider"
+            android:exported="true" />
+
+        <!-- VULNERABILITY: Broadcast Receiver that leaks sensitive data -->
+        <receiver
+            android:name=".DataBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.pentestlab.exposedapp.USER_DATA" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

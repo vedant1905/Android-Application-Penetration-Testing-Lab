@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InsecureVault</string>
+
+    <!-- VULNERABILITY: Hardcoded API secret in resources -->
+    <!-- Can be found by: aapt dump resources app.apk | grep api -->
+    <!-- Or by opening res/values/strings.xml after decompiling with APKTool -->
+    <string name="api_secret">sk_live_FAKE_51Hx8aGjk39dNSjLmK4pR7Qz</string>
+    <string name="firebase_key">AIzaSyBFAKE-firebase-key-12345</string>
+    <string name="encryption_iv">0123456789ABCDEF</string>
+</resources>
